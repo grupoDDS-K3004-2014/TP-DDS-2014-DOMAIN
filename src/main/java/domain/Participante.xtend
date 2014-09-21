@@ -3,6 +3,7 @@ import java.util.ArrayList
 import java.util.List
 import org.uqbar.commons.utils.Observable
 import org.uqbar.commons.model.Entity
+import java.util.Date
 
 @Observable
 class Participante extends Entity{
@@ -11,10 +12,11 @@ class Participante extends Entity{
 	@Property ArrayList<Participante> amigos = new ArrayList<Participante>
 	@Property ArrayList<Infraccion> infracciones = new ArrayList<Infraccion>
 	@Property String nombre
-	@Property long fechaNacimiento
+	@Property Date fechaNacimiento
 	@Property Sistema datosDelOrganizadorDePartidos
 	@Property ArrayList<Integer> puntajesCriterio = new ArrayList
 	@Property int handicap
+	@Property String apodo
 
 	def serDezplazadoSolidario(Partido partido) {
 	}

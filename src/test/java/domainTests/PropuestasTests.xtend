@@ -8,6 +8,8 @@ import domain.Partido
 import domain.Propuesta
 import domain.Sistema
 import domain.Estandar
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class PropuestasTests {
 
@@ -16,6 +18,7 @@ class PropuestasTests {
 	Partido partido
 	Propuesta propuesta1
 	Sistema datosDelSistema
+	SimpleDateFormat formatoDelTexto
 
 	@Before
 	def void beforeInscripcion() {
@@ -31,7 +34,7 @@ class PropuestasTests {
 		jugador1.datosDelOrganizadorDePartidos = datosDelSistema
 
 		propuesta1.setNombre("Mariano")
-		propuesta1.fechaDeNacimiento = 321993
+		propuesta1.fechaDeNacimiento = stringToDate("0321993")
 		propuesta1.amigos.add(jugador1)
 		propuesta1.setModalidad(modalidadPropuesta)
 
@@ -57,4 +60,9 @@ class PropuestasTests {
 		Assert.assertEquals(1, datosDelSistema.rechazos.size)
 	}
 
+def Date stringToDate(String fecha){
+	formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy")
+	return formatoDelTexto.parse(fecha)
+	
+}
 }
