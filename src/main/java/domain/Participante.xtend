@@ -1,8 +1,11 @@
 package domain
 import java.util.ArrayList
 import java.util.List
+import org.uqbar.commons.utils.Observable
+import org.uqbar.commons.model.Entity
 
-abstract class Participante {
+@Observable
+class Participante extends Entity{
 
 	@Property List<Calificacion> calificaciones = new ArrayList<Calificacion>
 	@Property ArrayList<Participante> amigos = new ArrayList<Participante>

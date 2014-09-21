@@ -1,8 +1,14 @@
 package domain
+
 import java.util.ArrayList
 import java.util.List
+import org.eclipse.xtend.lib.Property
+import org.uqbar.commons.model.Entity
+import org.uqbar.commons.utils.Observable
+import org.uqbar.commons.model.UserException
 
-class Partido {
+@Observable
+class Partido extends Entity implements Cloneable{
 
 	@Property int periodicidad
 	@Property Dia dia
@@ -15,6 +21,8 @@ class Partido {
 	@Property List<Participante> equipoA = new ArrayList<Participante>
 	@Property List<Participante> equipoB = new ArrayList<Participante>
 	@Property ArrayList<Participante> jugadoresOrdenados = new ArrayList<Participante>
+	@Property String nombreDelPartido
+	@Property String confirmado = "No"
 
 	new() {
 
@@ -22,6 +30,54 @@ class Partido {
 		solidarios = new ArrayList<Solidario>
 		condicionales = new ArrayList<Condicional>
 		observers = new ArrayList<Observer>
+	}
+	
+	def void copiarValoresDe(Partido partido){
+		periodicidad = partido.periodicidad
+		dia = partido.dia
+		horario = partido.horario
+		fecha = partido.fecha
+		participantes = partido.participantes
+		solidarios = partido.solidarios
+		condicionales = partido.condicionales
+		observers = partido.observers
+		equipoA = partido.equipoA
+		equipoB = partido.equipoB
+		jugadoresOrdenados = partido.jugadoresOrdenados
+		confirmado = partido.confirmado
+		}
+	
+	override clone() {
+		super.clone()
+	}
+
+	def confirmarPartido() {
+		validarConfirmacion
+		if(confirmado == "No") confirmado = "Si" else confirmado = "No"
+	}
+
+	def validarConfirmacion() {
+		if (this.noOrganizado) {
+			throw new UserException("El equipo no está organizado")
+		}
+	}
+
+	def boolean noOrganizado() {
+		equipoA.isEmpty && equipoB.isEmpty
+
+	}
+
+	def int cantidadInscriptos() {
+		participantes.size + solidarios.size + condicionales.size
+	}
+
+	def Partido setValores(int periodicidad2, Dia dia2, int horario2, int fecha2, String nombreDelPartido2) {
+		periodicidad = periodicidad2
+		dia = dia2
+		horario = horario2
+		fecha = fecha2
+		nombreDelPartido = nombreDelPartido2
+		return this
 	}
 
 	def int cantidadParticipantes() {
@@ -90,5 +146,4 @@ class Partido {
 		participanteADarDeBaja.agregarInfraccion(infraccion)
 	}
 
-// aca no tiene que ir lo del command
 }
