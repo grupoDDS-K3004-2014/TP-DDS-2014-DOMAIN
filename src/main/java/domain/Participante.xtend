@@ -25,7 +25,7 @@ class Participante extends Entity{
 	def reemplazarSegunPrioridad(Partido partido, Participante jugador) {
 	}
 
-	def inscripcion(Partido partido) {
+	def void inscripcion(Partido partido) {		
 	}
 
 	def agregarCondicion(Condicion condicion) {

@@ -1,7 +1,9 @@
 package domain
-import java.util.List
+
 import java.util.ArrayList
 import java.util.Collections
+import java.util.List
+import org.eclipse.xtend.lib.Property
 
 class Sistema {
 
@@ -28,11 +30,15 @@ class Sistema {
 	}
 
 	def organizarJugadoresPorCriterio(Criterio criterio, Partido partido) {
-		partido.jugadoresOrdenados= partido.participantes
-		partido.jugadoresOrdenados.forEach[Participante participante|participante.puntajesCriterio = new ArrayList<Integer>]
-		partido.jugadoresOrdenados.forEach[Participante participante|criterio.determinarPuntajeCriterio(participante)]
-		Collections.sort(partido.jugadoresOrdenados, new Comparador)
+		var jugadoresOrdenados = new ArrayList<Participante>
+		jugadoresOrdenados= partido.participantes
+		jugadoresOrdenados.forEach[Participante participante|participante.puntajesCriterio = new ArrayList<Integer>]
+		jugadoresOrdenados.forEach[Participante participante|criterio.determinarPuntajeCriterio(participante)]
+		Collections.sort(jugadoresOrdenados, new Comparador)
+		partido.jugadoresOrdenados=jugadoresOrdenados
 	}
+	
+	
 
 	def generarEquiposTentativos(DivisionEquipos algoritmoDivision,Partido partido, List<Integer> posicionesDeUnEquipo) {
 		algoritmoDivision.distribuirEquipos(partido.jugadoresOrdenados, posicionesDeUnEquipo)
