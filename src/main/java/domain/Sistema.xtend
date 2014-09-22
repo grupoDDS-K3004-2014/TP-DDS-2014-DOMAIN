@@ -42,6 +42,8 @@ class Sistema {
 
 	def generarEquiposTentativos(DivisionEquipos algoritmoDivision,Partido partido, List<Integer> posicionesDeUnEquipo) {
 		algoritmoDivision.distribuirEquipos(partido.jugadoresOrdenados, posicionesDeUnEquipo)
+		partido.equipoA=algoritmoDivision.jugadoresEquipoA
+		partido.equipoB=algoritmoDivision.jugadoresEquipoB
 	}
 
 	def confirmarEquipos(DivisionEquipos algoritmoDivision, Partido partido) {

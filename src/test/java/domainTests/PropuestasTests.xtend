@@ -34,7 +34,7 @@ class PropuestasTests {
 		jugador1.datosDelOrganizadorDePartidos = datosDelSistema
 
 		propuesta1.setNombre("Mariano")
-		propuesta1.fechaDeNacimiento = stringToDate("0321993")
+		propuesta1.fechaDeNacimiento = stringToDate("03021993")
 		propuesta1.amigos.add(jugador1)
 		propuesta1.setModalidad(modalidadPropuesta)
 
