@@ -5,6 +5,7 @@ import org.uqbar.commons.utils.Observable
 import org.uqbar.commons.model.Entity
 import java.util.Date
 //import org.uqbar.commons.model.UserException
+//PROBLEMAS EN LA FECHA
 
 @Observable
 class Participante extends Entity{
