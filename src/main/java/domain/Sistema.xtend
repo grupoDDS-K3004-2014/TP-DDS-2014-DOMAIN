@@ -42,14 +42,11 @@ class Sistema {
 	def generarEquiposTentativos(Partido partido, ArrayList<Integer> posicionesDeUnEquipo) {
 		equipoA = new ArrayList<Participante>
 		equipoB = new ArrayList<Participante>
-		var i = 0
-		for (i = 0; i < 10; i++) {
-			if (posicionesDeUnEquipo.contains(i)) {
-				equipoA.add(partido.jugadoresOrdenados.get(i))
-			} else {
-				equipoB.add(partido.jugadoresOrdenados.get(i))
-			}
-		}
+		
+		partido.jugadoresOrdenados.forEach[jugadorOrdenado | if(posicionesDeUnEquipo.map[numero|numero-1].contains(partido.jugadoresOrdenados.indexOf(jugadorOrdenado))) equipoA.add(jugadorOrdenado) else equipoB.add(jugadorOrdenado)]
+		
+		
+		
 
 	}
 
