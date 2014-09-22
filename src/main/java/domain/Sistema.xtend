@@ -11,7 +11,8 @@ class Sistema {
 	@Property List<Rechazo> rechazos = new ArrayList<Rechazo>
 	@Property List<Participante> jugadoresHabilitados = new ArrayList<Participante>
 	@Property long fechaDelDia
-	
+	@Property ArrayList<Participante> equipoA = new ArrayList
+	@Property ArrayList<Participante> equipoB = new ArrayList
 
 	def aceptarPropuesta(Propuesta propuesta) {
 		propuestas.remove(propuesta)
@@ -31,25 +32,31 @@ class Sistema {
 
 	def organizarJugadoresPorCriterio(Criterio criterio, Partido partido) {
 		var jugadoresOrdenados = new ArrayList<Participante>
-		jugadoresOrdenados= partido.participantes
+		jugadoresOrdenados = partido.participantes
 		jugadoresOrdenados.forEach[Participante participante|participante.puntajesCriterio = new ArrayList<Integer>]
 		jugadoresOrdenados.forEach[Participante participante|criterio.determinarPuntajeCriterio(participante)]
 		Collections.sort(jugadoresOrdenados, new Comparador)
-		partido.jugadoresOrdenados=jugadoresOrdenados
-	}
-	
-	
-
-	def generarEquiposTentativos(DivisionEquipos algoritmoDivision,Partido partido, List<Integer> posicionesDeUnEquipo) {
-		algoritmoDivision.distribuirEquipos(partido.jugadoresOrdenados, posicionesDeUnEquipo)
-		partido.equipoA=algoritmoDivision.jugadoresEquipoA
-		partido.equipoB=algoritmoDivision.jugadoresEquipoB
+		partido.jugadoresOrdenados = jugadoresOrdenados
 	}
 
-	def confirmarEquipos(DivisionEquipos algoritmoDivision, Partido partido) {
-		partido.setEquipoA(algoritmoDivision.jugadoresEquipoA)
-		partido.setEquipoB(algoritmoDivision.jugadoresEquipoB)
-		
+	def generarEquiposTentativos(Partido partido, ArrayList<Integer> posicionesDeUnEquipo) {
+		equipoA = new ArrayList<Participante>
+		equipoB = new ArrayList<Participante>
+		var i = 0
+		for (i = 0; i < 10; i++) {
+			if (posicionesDeUnEquipo.contains(i)) {
+				equipoA.add(partido.jugadoresOrdenados.get(i))
+			} else {
+				equipoB.add(partido.jugadoresOrdenados.get(i))
+			}
+		}
+
 	}
+
+	def confirmarEquipos(Partido partido) {
+		partido.equipoA = equipoA
+		partido.equipoB = equipoB
+	}
+	
 
 }

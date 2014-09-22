@@ -1,14 +1,16 @@
 package domainTests
+
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import domain.Participante
 import domain.Partido
-import domain.DivisionEquipos
 import domain.Sistema
 import domain.Estandar
 import domain.Solidario
 import domain.Condicional
+import java.util.ArrayList
+import java.util.Arrays
 
 class EquiposTest {
 
@@ -22,9 +24,10 @@ class EquiposTest {
 	Participante jugador8
 	Participante jugador9
 	Participante jugador10
+	ArrayList<Integer> arrayPosiciones
 
 	Partido partido
-	DivisionEquipos algoritmoDivision
+
 	Sistema datosDelSistema
 
 	@Before
@@ -41,10 +44,10 @@ class EquiposTest {
 		jugador8 = new Estandar
 		jugador9 = new Estandar
 		jugador10 = new Estandar
+		arrayPosiciones = new ArrayList<Integer>
 
 		datosDelSistema = new Sistema
 		datosDelSistema.fechaDelDia = 17062014
-		algoritmoDivision = new DivisionEquipos
 
 		////esto es realidad es el output de sistema.oganizarJugadoresPorCriterio()
 		partido.jugadoresOrdenados.add(jugador1)
@@ -61,25 +64,40 @@ class EquiposTest {
 
 	@Test
 	def testGenerarEquiposTentativosAlgoritmoParesImpares() {
-		datosDelSistema.generarEquiposTentativos(algoritmoDivision,partido, #[2, 4, 6, 8, 10])
-		Assert.assertEquals(#[jugador2, jugador4, jugador6, jugador8, jugador10], algoritmoDivision.jugadoresEquipoA)
-		Assert.assertEquals(#[jugador1, jugador3, jugador5, jugador7, jugador9], algoritmoDivision.jugadoresEquipoB)
+		arrayPosiciones.add(2)
+		arrayPosiciones.add(4)
+		arrayPosiciones.add(6)
+		arrayPosiciones.add(8)
+		arrayPosiciones.add(10)
+		datosDelSistema.generarEquiposTentativos(partido, arrayPosiciones)
+		Assert.assertEquals(new ArrayList<Participante>(Arrays.asList(jugador2, jugador4, jugador6, jugador8, jugador10)), datosDelSistema.equipoA)
+		Assert.assertEquals(new ArrayList<Participante>(Arrays.asList(jugador1, jugador3, jugador5, jugador7, jugador9)), datosDelSistema.equipoB)
 
 	}
 
 	@Test
 	def testGenerarEquiposTentativosAlgoritmoPosiciones() {
-		datosDelSistema.generarEquiposTentativos(algoritmoDivision,partido, #[1, 4, 5, 8, 9])
-		Assert.assertEquals(#[jugador1, jugador4, jugador5, jugador8, jugador9], algoritmoDivision.jugadoresEquipoA)
-		Assert.assertEquals(#[jugador2, jugador3, jugador6, jugador7, jugador10], algoritmoDivision.jugadoresEquipoB)
+		arrayPosiciones.add(1)
+		arrayPosiciones.add(4)
+		arrayPosiciones.add(5)
+		arrayPosiciones.add(8)
+		arrayPosiciones.add(9)
+		datosDelSistema.generarEquiposTentativos(partido, arrayPosiciones)
+		Assert.assertEquals(new ArrayList<Participante>(Arrays.asList(jugador1, jugador4, jugador5, jugador8, jugador9)), datosDelSistema.equipoA)
+		Assert.assertEquals(new ArrayList<Participante>(Arrays.asList(jugador2, jugador3, jugador6, jugador7, jugador10)), datosDelSistema.equipoB)
 	}
 
 	@Test
 	def testConfirmarEquiposTentativos() {
-		datosDelSistema.generarEquiposTentativos(algoritmoDivision,partido, #[1, 4, 5, 8, 9])
-		datosDelSistema.confirmarEquipos(algoritmoDivision, partido)
-		Assert.assertEquals(#[jugador1, jugador4, jugador5, jugador8, jugador9], partido.equipoA)
-		Assert.assertEquals(#[jugador2, jugador3, jugador6, jugador7, jugador10], partido.equipoB)
+		arrayPosiciones.add(1)
+		arrayPosiciones.add(4)
+		arrayPosiciones.add(5)
+		arrayPosiciones.add(8)
+		arrayPosiciones.add(9)
+		datosDelSistema.generarEquiposTentativos(partido, arrayPosiciones)
+		datosDelSistema.confirmarEquipos(partido)
+		Assert.assertEquals(new ArrayList<Participante>(Arrays.asList(jugador1, jugador4, jugador5, jugador8, jugador9)), partido.equipoA)
+		Assert.assertEquals(new ArrayList<Participante>(Arrays.asList(jugador2, jugador3, jugador6, jugador7, jugador10)), partido.equipoB)
 	}
 
 }
