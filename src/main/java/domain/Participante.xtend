@@ -10,9 +10,10 @@ import java.util.Date
 @Observable
 class Participante extends Entity{
 
+
 	@Property List<Calificacion> calificaciones = new ArrayList<Calificacion>
 	@Property ArrayList<Participante> amigos = new ArrayList<Participante>
-	@Property ArrayList<Infraccion> infracciones = new ArrayList<Infraccion>
+	@Property List<Infraccion> infracciones = new ArrayList<Infraccion>
 	@Property String nombre
 	@Property Date fechaNacimiento
 	@Property Sistema datosDelOrganizadorDePartidos
@@ -106,10 +107,6 @@ class Participante extends Entity{
 	def tienePromedioMayorA(long promedioMenor){
 		if(promedioMenor==0){return true}
 			else{promedio>promedioMenor}
-	}
-	
-	def setPromedio(long promedio){
-		this.puntajesCriterio.fold(0)[total, puntaje|total + puntaje] /this.puntajesCriterio.size
 	}
 	
 	
