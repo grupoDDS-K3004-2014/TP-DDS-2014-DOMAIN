@@ -1,4 +1,5 @@
 package domain
+
 class Rechazo {
 
 	@Property long fecha

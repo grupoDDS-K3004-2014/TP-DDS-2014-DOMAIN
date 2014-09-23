@@ -1,4 +1,5 @@
 package domain
+
 class Calificacion {
 	@Property int nota
 	@Property String descripcion
@@ -7,6 +8,5 @@ class Calificacion {
 	def calificacionCorrecta() {
 		nota >= 1 && nota <= 10
 	}
-
 
 }

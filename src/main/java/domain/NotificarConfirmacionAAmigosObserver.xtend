@@ -1,4 +1,5 @@
 package domain
+
 class NotificarConfirmacionAAmigosObserver implements Observer {
 
 	@Property ServidorDeEmails servidorEmails = new ServidorDeEmails

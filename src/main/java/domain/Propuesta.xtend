@@ -1,9 +1,9 @@
 package domain
+
 import java.util.ArrayList
 import java.util.Date
 
 class Propuesta {
-	
 
 	@Property String nombre
 	@Property Date fechaDeNacimiento

@@ -1,4 +1,5 @@
 package domain
+
 enum Dia {
 
 	Lunes,
@@ -9,4 +10,3 @@ enum Dia {
 	Sabado,
 	Domingo
 }
-
