@@ -2,10 +2,8 @@ package domain
 
 import java.util.ArrayList
 import java.util.List
-import org.eclipse.xtend.lib.Property
 import org.uqbar.commons.model.Entity
 import org.uqbar.commons.utils.Observable
-import org.uqbar.commons.model.UserException
 
 @Observable
 class Partido extends Entity implements Cloneable {
