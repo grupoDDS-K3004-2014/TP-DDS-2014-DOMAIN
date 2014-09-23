@@ -19,6 +19,7 @@ class Partido extends Entity implements Cloneable {
 	@Property List<Participante> equipoA = new ArrayList<Participante>
 	@Property List<Participante> equipoB = new ArrayList<Participante>
 	@Property ArrayList<Participante> jugadoresOrdenados = new ArrayList<Participante>
+	@Property String confirmado = "No"
 	@Property String nombreDelPartido
 
 	new() {
