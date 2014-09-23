@@ -1,4 +1,5 @@
 package domain
+
 class InfraccionBajaSinRemplazo implements Infraccion {
 
 	@Property int fecha

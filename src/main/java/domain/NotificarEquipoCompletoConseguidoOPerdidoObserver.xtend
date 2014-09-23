@@ -1,4 +1,5 @@
 package domain
+
 class NotificarEquipoCompletoConseguidoOPerdidoObserver implements Observer {
 
 	@Property int confirmados = 0

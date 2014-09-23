@@ -1,4 +1,5 @@
 package domain
+
 class Solidario extends Participante {
 
 	override inscripcion(Partido partido) {

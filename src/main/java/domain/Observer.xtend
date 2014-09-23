@@ -1,4 +1,5 @@
 package domain
+
 interface Observer {
 
 	def void notificarAlta(Participante observable)
