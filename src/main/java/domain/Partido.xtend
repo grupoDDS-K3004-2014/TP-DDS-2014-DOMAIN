@@ -8,7 +8,7 @@ import org.uqbar.commons.utils.Observable
 import org.uqbar.commons.model.UserException
 
 @Observable
-class Partido extends Entity implements Cloneable{
+class Partido extends Entity implements Cloneable {
 
 	@Property int periodicidad
 	@Property Dia dia
@@ -22,7 +22,6 @@ class Partido extends Entity implements Cloneable{
 	@Property List<Participante> equipoB = new ArrayList<Participante>
 	@Property ArrayList<Participante> jugadoresOrdenados = new ArrayList<Participante>
 	@Property String nombreDelPartido
-	@Property String confirmado = "No"
 
 	new() {
 
@@ -31,8 +30,8 @@ class Partido extends Entity implements Cloneable{
 		condicionales = new ArrayList<Condicional>
 		observers = new ArrayList<Observer>
 	}
-	
-	def void copiarValoresDe(Partido partido){
+
+	def void copiarValoresDe(Partido partido) {
 		periodicidad = partido.periodicidad
 		dia = partido.dia
 		horario = partido.horario
@@ -44,27 +43,11 @@ class Partido extends Entity implements Cloneable{
 		equipoA = partido.equipoA
 		equipoB = partido.equipoB
 		jugadoresOrdenados = partido.jugadoresOrdenados
-		confirmado = partido.confirmado
-		}
-	
+
+	}
+
 	override clone() {
 		super.clone()
-	}
-
-	def confirmarPartido() {
-		validarConfirmacion
-		if(confirmado == "No") confirmado = "Si" else confirmado = "No"
-	}
-
-	def validarConfirmacion() {
-		if (this.noOrganizado) {
-			throw new UserException("El equipo no está organizado")
-		}
-	}
-
-	def boolean noOrganizado() {
-		equipoA.isEmpty && equipoB.isEmpty
-
 	}
 
 	def int cantidadInscriptos() {
