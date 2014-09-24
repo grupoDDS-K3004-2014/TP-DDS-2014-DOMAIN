@@ -19,6 +19,7 @@ class Participante extends Entity {
 	@Property int handicap
 	@Property String apodo
 	@Property long promedio
+	@Property int ultimoPuntaje
 
 	def serDezplazadoSolidario(Partido partido) {
 	}
@@ -60,5 +61,15 @@ class Participante extends Entity {
 		var arrayAux = calificaciones.subList(0, i)
 		(arrayAux.map[calificacion|calificacion.nota].fold(0)[total, nota|total + nota]) / cantidadEfectiva
 
+	}
+	
+	def ultimaNota(){
+		ultimoPuntaje = puntajesCriterio.head
+	}
+	
+	def calcularPromedio(){
+		var long numero
+		numero = 0
+		promedio = puntajesCriterio.fold(numero)[valor, total | valor + total]
 	}
 }
