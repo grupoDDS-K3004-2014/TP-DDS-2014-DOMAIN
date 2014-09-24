@@ -63,13 +63,4 @@ class Participante extends Entity {
 
 	}
 	
-	def ultimaNota(){
-		ultimoPuntaje = puntajesCriterio.head
-	}
-	
-	def calcularPromedio(){
-		var long numero
-		numero = 0
-		promedio = puntajesCriterio.fold(numero)[valor, total | valor + total]
-	}
 }
