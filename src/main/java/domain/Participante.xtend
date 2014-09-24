@@ -58,7 +58,7 @@ class Participante extends Entity {
 		var cantidadEfectiva = 0
 		if(i > calificaciones.size) cantidadEfectiva = calificaciones.size else cantidadEfectiva = i
 		var arrayAux = calificaciones.subList(0, i)
-		(arrayAux.map[calificacion|calificacion.nota].fold(0)[total,nota|total+nota])/cantidadEfectiva
+		(arrayAux.map[calificacion|calificacion.nota].fold(0)[total, nota|total + nota]) / cantidadEfectiva
 
 	}
 }
