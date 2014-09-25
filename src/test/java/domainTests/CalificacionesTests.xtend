@@ -1,15 +1,16 @@
 package domainTests
+
+import domain.Dia
+import domain.calificaciones.Calificacion
+import domain.jugadores.Estandar
+import domain.jugadores.Participante
+import domain.notificaciones.ServidorDeEmails
+import domain.observers.NotificarConfirmacionAAmigosObserver
+import domain.observers.NotificarEquipoCompletoConseguidoOPerdidoObserver
+import domain.partido.Partido
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import domain.Calificacion
-import domain.Partido
-import domain.Participante
-import domain.NotificarConfirmacionAAmigosObserver
-import domain.NotificarEquipoCompletoConseguidoOPerdidoObserver
-import domain.ServidorDeEmails
-import domain.Estandar
-import domain.Dia
 
 class CalificacionesTests {
 
@@ -27,7 +28,7 @@ class CalificacionesTests {
 		partido.setDia(Dia.Lunes)
 		partido.setHorario(18)
 		partido.setPeriodicidad(1)
-		partido.setFecha(01012000)
+		partido.setFecha("01/01/2000")
 
 		observerNotificarAmigos.setServidorEmails(gmail)
 		observerNotificarAdministrador.setServidorEmails(gmail)
@@ -48,13 +49,22 @@ class CalificacionesTests {
 		Assert.assertEquals(1, cantidadCalificaciones)
 	}
 
-	@Test
-	def calificacionNoApareceEnListaTest() {
+	@Test(expected=RuntimeException)
+	def calificacionDeUnUsuarioIncorrecto() {
 		partido.suscribir(jugador1)
 		calificacion.nota = 7
 		calificacion.descripcion = "aprueba por promocion"
 		jugador1.calificarJugador(partido, jugador2, calificacion)
-		val cantidadCalificaciones = jugador2.getCalificaciones.size()
-		Assert.assertEquals(0, cantidadCalificaciones)
+		Assert.assertEquals(jugador2.calificaciones, 0)
+	}
+
+	@Test(expected=RuntimeException)
+	def calificacionConNotaIncorrecta() {
+		partido.suscribir(jugador1)
+		partido.suscribir(jugador2)
+		calificacion.nota = 70
+		calificacion.descripcion = "aprueba por promocion"
+		jugador1.calificarJugador(partido, jugador2, calificacion)
+		Assert.assertEquals(0, 0)
 	}
 }

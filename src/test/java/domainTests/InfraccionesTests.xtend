@@ -1,12 +1,13 @@
 package domainTests
+
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import domain.Partido
-import domain.Participante
-import domain.Condicional
+import domain.partido.Partido
+import domain.jugadores.Condicional
+import domain.jugadores.Participante
 import domain.Dia
-import domain.InfraccionBajaSinRemplazo
+import domain.infracciones.InfraccionBajaSinRemplazo
 
 class InfraccionesTests {
 	Partido partido = new Partido
@@ -18,7 +19,7 @@ class InfraccionesTests {
 		partido.setDia(Dia.Lunes)
 		partido.setHorario(18)
 		partido.setPeriodicidad(1)
-		partido.setFecha(01012000)
+		partido.setFecha("01/01/2000")
 
 	}
 
@@ -39,8 +40,8 @@ class InfraccionesTests {
 		partido.darDeBaja(jugador4)
 		var fechaInfraccion = jugador4.getInfracciones.head.getFecha
 		var infraccionMock = new InfraccionBajaSinRemplazo
-		infraccionMock.setFecha(01012000)
-		Assert.assertEquals(fechaInfraccion,infraccionMock.fecha)
+		infraccionMock.setFecha("01/01/2000")
+		Assert.assertEquals(fechaInfraccion, infraccionMock.fecha)
 
 	}
 }

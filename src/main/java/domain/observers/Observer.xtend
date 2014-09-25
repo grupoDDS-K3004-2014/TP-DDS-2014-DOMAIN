@@ -1,4 +1,4 @@
-package domain
+package domain.observers
 
 import domain.jugadores.Participante
 

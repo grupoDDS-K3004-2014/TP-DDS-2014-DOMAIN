@@ -1,15 +1,14 @@
 package domain.partido
 
 import domain.Dia
-import domain.Observer
 import domain.criterios.Criterio
 import domain.exceptions.PartidoLleno
 import domain.infracciones.InfraccionBajaSinRemplazo
 import domain.jugadores.Participante
 import java.util.ArrayList
-import java.util.Collection
 import org.uqbar.commons.model.Entity
 import org.uqbar.commons.utils.Observable
+import domain.observers.Observer
 
 @Observable
 class Partido extends Entity implements Cloneable {
@@ -18,14 +17,14 @@ class Partido extends Entity implements Cloneable {
 	@Property Dia dia
 	@Property int horario
 	@Property String fecha
-	Collection<Participante> participantesAux = new ArrayList<Participante>
-	@Property Collection<Participante> estandares = new ArrayList
-	@Property Collection<Participante> condicionales = new ArrayList
-	@Property Collection<Participante> solidarios = new ArrayList
-	@Property Collection<Observer> observers = new ArrayList
-	@Property Collection<Participante> equipoA = new ArrayList
-	@Property Collection<Participante> equipoB = new ArrayList
-	@Property Collection<Participante> jugadoresOrdenados = new ArrayList
+	ArrayList<Participante> participantesAux = new ArrayList<Participante>
+	@Property ArrayList<Participante> estandares = new ArrayList
+	@Property ArrayList<Participante> condicionales = new ArrayList
+	@Property ArrayList<Participante> solidarios = new ArrayList
+	@Property ArrayList<Observer> observers = new ArrayList
+	@Property ArrayList<Participante> equipoA = new ArrayList
+	@Property ArrayList<Participante> equipoB = new ArrayList
+	@Property ArrayList<Participante> jugadoresOrdenados = new ArrayList
 	@Property String confirmado = "No"
 	@Property String nombreDelPartido
 
@@ -48,10 +47,25 @@ class Partido extends Entity implements Cloneable {
 
 	def void ordenarJugadores(Criterio criterio) {
 		jugadoresOrdenados = participantes
-		jugadoresOrdenados.sortBy(criterio.devolverCriterio(this))
+		jugadoresOrdenados = new ArrayList(jugadoresOrdenados.sortBy(criterio.devolverCriterio(this)).reverse)
 	}
 
-	
+	def separarJugadoresOrdenados(ArrayList<Integer> arrayDePosiciones) {
+
+		equipoA = new ArrayList
+		equipoB = new ArrayList
+
+		arrayDePosiciones.map[posicion|posicion - 1].forEach[posicion|equipoA.add(jugadoresOrdenados.get(posicion))]
+		equipoB.addAll(jugadoresOrdenados.filter[jugadores|!(equipoA.contains(jugadores))])
+	}
+
+	def void confirmarDesconfirmarPartido() {
+		if (confirmado == "No")
+			confirmado = "Si"
+		else
+			confirmado = "No"
+	}
+
 	def int cantidadParticipantes() {
 		return getParticipantes.size
 	}
@@ -114,4 +128,5 @@ class Partido extends Entity implements Cloneable {
 
 	def setParticipantes(ArrayList<Participante> p) {
 	}
+
 }

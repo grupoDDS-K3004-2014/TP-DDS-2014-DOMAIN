@@ -1,6 +1,5 @@
 package domainTests
 
-
 import java.util.ArrayList
 import org.junit.Assert
 import org.junit.Before
@@ -8,6 +7,8 @@ import org.junit.Test
 import domain.jugadores.Participante
 import domain.jugadores.Estandar
 import domain.partido.Partido
+import domain.jugadores.Solidario
+import domain.jugadores.Condicional
 
 class EquiposTest {
 
@@ -26,7 +27,6 @@ class EquiposTest {
 
 	Partido partido
 	Partido partido2
-	
 
 	@Before
 	def void beforeInscripcion() {
@@ -46,9 +46,6 @@ class EquiposTest {
 		arrayPosiciones = new ArrayList<Integer>
 		arrayAssert = new ArrayList<Participante>
 
-		datosDelSistema = new Sistema
-
-		////esto es realidad es el output de sistema.oganizarJugadoresPorCriterio()
 		partido.jugadoresOrdenados.add(jugador1)
 		partido.jugadoresOrdenados.add(jugador2)
 		partido.jugadoresOrdenados.add(jugador3)
@@ -64,103 +61,32 @@ class EquiposTest {
 	@Test
 	def testGenerarEquiposTentativosAlgoritmoParesImpares() {
 
-		arrayPosiciones.add(2)
-		arrayPosiciones.add(4)
-		arrayPosiciones.add(6)
-		arrayPosiciones.add(8)
-		arrayPosiciones.add(10)
+		arrayPosiciones = new ArrayList(#[1, 3, 5, 7, 9])
+		arrayAssert = new ArrayList(#[jugador1, jugador3, jugador5, jugador7, jugador9])
 
-		arrayAssert.add(jugador2)
-		arrayAssert.add(jugador4)
-		arrayAssert.add(jugador6)
-		arrayAssert.add(jugador8)
-		arrayAssert.add(jugador10)
-
-		datosDelSistema.generarEquiposTentativos(partido, arrayPosiciones)
-		Assert.assertEquals(arrayAssert, datosDelSistema.equipoA)
-
-		arrayAssert = new ArrayList
-		arrayAssert.add(jugador1)
-		arrayAssert.add(jugador3)
-		arrayAssert.add(jugador5)
-		arrayAssert.add(jugador7)
-		arrayAssert.add(jugador9)
-		Assert.assertEquals(arrayAssert, datosDelSistema.equipoB)
-
+		partido.separarJugadoresOrdenados(arrayPosiciones)
+		Assert.assertEquals(arrayAssert, partido.equipoA)
 	}
 
 	@Test
 	def testGenerarEquiposTentativosAlgoritmoPosiciones() {
 
-		arrayPosiciones.add(1)
-		arrayPosiciones.add(4)
-		arrayPosiciones.add(5)
-		arrayPosiciones.add(8)
-		arrayPosiciones.add(9)
+		arrayPosiciones = new ArrayList(#[1, 2, 3, 4, 5])
+		arrayAssert = new ArrayList(#[jugador1, jugador2, jugador3, jugador4, jugador5])
 
-		arrayAssert.add(jugador1)
-		arrayAssert.add(jugador4)
-		arrayAssert.add(jugador5)
-		arrayAssert.add(jugador8)
-		arrayAssert.add(jugador9)
-
-		datosDelSistema.generarEquiposTentativos(partido, arrayPosiciones)
-		Assert.assertEquals(arrayAssert, datosDelSistema.equipoA)
-
-		arrayAssert = new ArrayList
-		arrayAssert.add(jugador2)
-		arrayAssert.add(jugador3)
-		arrayAssert.add(jugador6)
-		arrayAssert.add(jugador7)
-		arrayAssert.add(jugador10)
-
-		Assert.assertEquals(arrayAssert, datosDelSistema.equipoB)
+		partido.separarJugadoresOrdenados(arrayPosiciones)
+		Assert.assertEquals(arrayAssert, partido.equipoA)
 	}
 
 	@Test
 	def testConfirmarEquiposTentativos() {
-		arrayPosiciones.add(1)
-		arrayPosiciones.add(4)
-		arrayPosiciones.add(5)
-		arrayPosiciones.add(8)
-		arrayPosiciones.add(9)
 
-		arrayAssert.add(jugador1)
-		arrayAssert.add(jugador4)
-		arrayAssert.add(jugador5)
-		arrayAssert.add(jugador8)
-		arrayAssert.add(jugador9)
+		arrayPosiciones = new ArrayList(#[1, 3, 5, 7, 9])
+		arrayAssert = new ArrayList(#[jugador2, jugador4, jugador6, jugador8, jugador10])
 
-		datosDelSistema.generarEquiposTentativos(partido, arrayPosiciones)
-		datosDelSistema.confirmarEquipos(partido)
-
-		Assert.assertEquals(arrayAssert, partido.equipoA)
-
-		arrayAssert = new ArrayList
-		arrayAssert.add(jugador2)
-		arrayAssert.add(jugador3)
-		arrayAssert.add(jugador6)
-		arrayAssert.add(jugador7)
-		arrayAssert.add(jugador10)
-		Assert.assertEquals(arrayAssert, partido.equipoB)
+		partido.separarJugadoresOrdenados(arrayPosiciones)
+		partido.confirmarDesconfirmarPartido
+		Assert.assertEquals(partido.confirmado, "Si")
 	}
 
-	@Test
-	def testArrays() {
-
-		partido2.jugadoresOrdenados.add(jugador1)
-		partido2.jugadoresOrdenados.add(jugador2)
-		partido2.jugadoresOrdenados.add(jugador3)
-		partido2.jugadoresOrdenados.add(jugador4)
-
-		arrayPosiciones.add(1)
-		arrayPosiciones.add(3)
-
-		arrayAssert.add(jugador1)
-		arrayAssert.add(jugador3)
-
-		datosDelSistema.generarEquiposTentativos(partido2, arrayPosiciones)
-		Assert.assertEquals(arrayAssert, datosDelSistema.equipoA)
-
-	}
 }

@@ -1,25 +1,22 @@
 package domainTests
+
+import domain.Sistema
+import domain.jugadores.Condicional
+import domain.jugadores.Estandar
+import domain.jugadores.Participante
+import domain.jugadores.Propuesta
+import domain.partido.Partido
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import domain.Condicional
-import domain.Participante
-import domain.Partido
-import domain.Propuesta
-import domain.Sistema
-import domain.Estandar
-import java.text.SimpleDateFormat
-import java.util.Date
 
 class PropuestasTests {
-	
 
 	Participante jugador1
 	Participante modalidadPropuesta
 	Partido partido
 	Propuesta propuesta1
 	Sistema datosDelSistema
-	SimpleDateFormat formatoDelTexto
 
 	@Before
 	def void beforeInscripcion() {
@@ -36,8 +33,7 @@ class PropuestasTests {
 
 		propuesta1.setNombre("Mariano")
 
-		propuesta1.fechaDeNacimiento = stringToDate("03/02/1993")
-
+		propuesta1.fechaDeNacimiento = "03/02/1993"
 
 		propuesta1.amigos.add(jugador1)
 		propuesta1.setModalidad(modalidadPropuesta)
@@ -64,9 +60,4 @@ class PropuestasTests {
 		Assert.assertEquals(1, datosDelSistema.rechazos.size)
 	}
 
-def Date stringToDate(String fecha){
-	formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy")
-	return formatoDelTexto.parse(fecha)
-	
-}
 }

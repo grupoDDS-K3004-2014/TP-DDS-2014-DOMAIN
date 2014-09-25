@@ -1,4 +1,7 @@
-package domain
+package domain.observers
+
+import domain.notificaciones.ServidorDeEmails
+import domain.jugadores.Participante
 
 class NotificarEquipoCompletoConseguidoOPerdidoObserver implements Observer {
 

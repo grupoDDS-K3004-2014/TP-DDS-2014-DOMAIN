@@ -1,12 +1,11 @@
-package domain
+package domain.jugadores
 
 import java.util.ArrayList
-import java.util.Date
 
 class Propuesta {
 
 	@Property String nombre
-	@Property Date fechaDeNacimiento
+	@Property String fechaDeNacimiento
 	@Property ArrayList<Participante> amigos = new ArrayList<Participante>
 	@Property Participante modalidad
 
