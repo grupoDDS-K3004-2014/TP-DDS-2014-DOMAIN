@@ -47,14 +47,15 @@ class Partido extends Entity implements Cloneable {
 
 	def void ordenarJugadores(Criterio criterio) {
 		jugadoresOrdenados = participantes
-		jugadoresOrdenados = new ArrayList(jugadoresOrdenados.sortBy(criterio.devolverCriterio(this)).reverse)
+		criterio.determinarPuntajeJugadores(this)
+		jugadoresOrdenados.forEach[jugador| jugador.puntajeCriterio = 0]
+		jugadoresOrdenados = new ArrayList(jugadoresOrdenados.sortBy[jugador|jugador.puntajeCriterio])
 	}
 
 	def separarJugadoresOrdenados(ArrayList<Integer> arrayDePosiciones) {
 
 		equipoA = new ArrayList
 		equipoB = new ArrayList
-
 		arrayDePosiciones.map[posicion|posicion - 1].forEach[posicion|equipoA.add(jugadoresOrdenados.get(posicion))]
 		equipoB.addAll(jugadoresOrdenados.filter[jugadores|!(equipoA.contains(jugadores))])
 	}

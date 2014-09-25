@@ -20,6 +20,7 @@ abstract class Participante extends Entity {
 	@Property String fechaNacimiento
 	@Property Sistema datosDelOrganizadorDePartidos
 	@Property int handicap
+	@Property Integer puntajeCriterio = 0
 	@Property String apodo
 
 	def agregarInfraccion(Infraccion infraccion) {
