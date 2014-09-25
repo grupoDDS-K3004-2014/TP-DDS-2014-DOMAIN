@@ -1,19 +1,17 @@
 package domainTests
 
-import domain.Condicional
-import domain.Estandar
-import domain.Participante
-import domain.Partido
-import domain.Sistema
-import domain.Solidario
+
 import java.util.ArrayList
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import domain.jugadores.Participante
+import domain.jugadores.Estandar
+import domain.partido.Partido
 
 class EquiposTest {
 
-	Participante jugador1
+	Estandar jugador1
 	Participante jugador2
 	Participante jugador3
 	Participante jugador4
@@ -28,8 +26,7 @@ class EquiposTest {
 
 	Partido partido
 	Partido partido2
-
-	Sistema datosDelSistema
+	
 
 	@Before
 	def void beforeInscripcion() {

@@ -1,9 +1,8 @@
-package domain
+package domain.infracciones
 
-class InfraccionBajaSinRemplazo implements Infraccion {
+class InfraccionBajaSinRemplazo extends Infraccion {
 
-	@Property int fecha
-
+	
 	def igualA(InfraccionBajaSinRemplazo infraccion) {
 		this.fecha == infraccion.fecha
 	}

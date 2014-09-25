@@ -1,4 +1,6 @@
-package domain
+package domain.condiciones
+
+import domain.partido.Partido
 
 interface Condicion {
 

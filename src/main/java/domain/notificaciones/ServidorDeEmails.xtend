@@ -1,7 +1,8 @@
-package domain
+package domain.notificaciones
 
 import java.util.ArrayList
 import java.util.List
+import domain.jugadores.Participante
 
 class ServidorDeEmails {
 

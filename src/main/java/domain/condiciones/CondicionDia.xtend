@@ -1,8 +1,10 @@
-package domain
+package domain.condiciones
+
+import domain.partido.Partido
 
 class CondicionDia implements Condicion {
 
-	@Property Dia diaCondicion
+	@Property domain.Dia diaCondicion
 
 	override verificarCondicion(Partido partido) {
 

@@ -1,5 +1,7 @@
 package domain
 
+import domain.jugadores.Participante
+
 interface Observer {
 
 	def void notificarAlta(Participante observable)
