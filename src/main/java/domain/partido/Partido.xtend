@@ -18,7 +18,7 @@ class Partido extends Entity implements Cloneable {
 	@Property int horario
 	@Property int periodicidad
 	@Property Dia dia
-	@Property String confirmado = "No"	
+	@Property String confirmado = "No"
 	ArrayList<Participante> participantesAux = new ArrayList<Participante>
 	@Property ArrayList<Participante> estandares = new ArrayList
 	@Property ArrayList<Participante> condicionales = new ArrayList
@@ -52,7 +52,6 @@ class Partido extends Entity implements Cloneable {
 		participantesAux.forEach[jugador|jugador.setPuntajeCriterio(0)]
 		participantesAux.forEach[jugador|jugador.calcularPuntajeCriterio(criterio)]
 		jugadoresOrdenados = new ArrayList(participantesAux.sortBy[jugador|jugador.puntajeCriterio].reverse)
-		confirmado="No"
 
 	}
 
@@ -62,15 +61,7 @@ class Partido extends Entity implements Cloneable {
 		equipoB = new ArrayList
 		arrayDePosiciones.map[posicion|posicion - 1].forEach[posicion|equipoA.add(jugadoresOrdenados.get(posicion))]
 		equipoB.addAll(jugadoresOrdenados.filter[jugadores|!(equipoA.contains(jugadores))])
-		confirmado = "Si"
 
-	}
-
-	def void confirmarDesconfirmarPartido() {
-		if (confirmado == "No")
-			confirmado = "Si"
-		else
-			confirmado = "No"
 	}
 
 	def int cantidadParticipantes() {
@@ -135,6 +126,14 @@ class Partido extends Entity implements Cloneable {
 	}
 
 	def setParticipantes(ArrayList<Participante> p) {
+	}
+
+	def confirmarDesconfirmarPartido() {
+
+		if (confirmado == "Si")
+			confirmado = "No"
+		else
+			confirmado = "Si"
 	}
 
 }

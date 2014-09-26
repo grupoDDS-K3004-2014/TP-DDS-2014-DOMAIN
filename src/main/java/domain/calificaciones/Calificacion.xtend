@@ -1,6 +1,10 @@
 package domain.calificaciones
 
-class Calificacion {
+import org.uqbar.commons.model.Entity
+import org.uqbar.commons.utils.Observable
+
+@Observable
+class Calificacion extends Entity {
 	@Property int nota
 	@Property String descripcion
 	@Property String fecha
