@@ -1,17 +1,17 @@
 package domainTests
 
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
 import domain.Dia
-import domain.partido.Partido
+import domain.jugadores.Condicional
 import domain.jugadores.Estandar
 import domain.jugadores.Participante
 import domain.jugadores.Solidario
-import domain.jugadores.Condicional
+import domain.notificaciones.ServidorDeEmails
 import domain.observers.NotificarConfirmacionAAmigosObserver
 import domain.observers.NotificarEquipoCompletoConseguidoOPerdidoObserver
-import domain.notificaciones.ServidorDeEmails
+import domain.partido.Partido
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 import domain.infracciones.InfraccionBajaSinRemplazo
 
 class NotificacionesTests {
@@ -29,7 +29,7 @@ class NotificacionesTests {
 	def void beforeInscripcion() {
 
 		partido.setDia(Dia.Lunes)
-		partido.setFecha("01012000")
+		partido.setFecha("01/01/2000")
 
 		observerNotificarAmigos.setServidorEmails(gmail)
 		observerNotificarAdministrador.setServidorEmails(gmail)
@@ -76,10 +76,7 @@ class NotificacionesTests {
 
 		partido.suscribir(jugador4)
 		partido.darDeBaja(jugador4)
-		var fechaInfraccion = jugador4.getInfracciones.head.getFecha
-		var infraccionMock = new InfraccionBajaSinRemplazo
-		infraccionMock.setFecha("01012000")
-		Assert.assertEquals(fechaInfraccion, infraccionMock.fecha)
+		Assert.assertTrue(InfraccionBajaSinRemplazo.nueva(partido.fecha, "").igual(jugador4.infracciones.head))
 
 	}
 

@@ -1,10 +1,14 @@
 package domain.infracciones
 
 class InfraccionBajaSinRemplazo extends Infraccion {
-
 	
-	def igualA(InfraccionBajaSinRemplazo infraccion) {
-		this.fecha == infraccion.fecha
+	
+	def static InfraccionBajaSinRemplazo nueva(String fecha2, String motivo2) {
+		var infraccion = new InfraccionBajaSinRemplazo
+		infraccion.fecha = fecha2
+		infraccion.motivo = motivo2
+		infraccion
+
 	}
 
 }

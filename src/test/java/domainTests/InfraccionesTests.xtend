@@ -37,11 +37,8 @@ class InfraccionesTests {
 	def inscribirJugadorYDarDeBajaVerificandoFecha() {
 
 		partido.suscribir(jugador4)
-		partido.darDeBaja(jugador4)
-		var fechaInfraccion = jugador4.getInfracciones.head.getFecha
-		var infraccionMock = new InfraccionBajaSinRemplazo
-		infraccionMock.setFecha("01/01/2000")
-		Assert.assertEquals(fechaInfraccion, infraccionMock.fecha)
+		partido.darDeBaja(jugador4)		
+		Assert.assertTrue(InfraccionBajaSinRemplazo.nueva(partido.fecha, "").igual(jugador4.infracciones.head))
 
 	}
 }

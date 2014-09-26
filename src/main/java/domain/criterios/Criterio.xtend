@@ -1,9 +1,9 @@
 package domain.criterios
 
-import domain.partido.Partido
+import domain.jugadores.Participante
 
 interface Criterio {
 
-	def void determinarPuntajeJugadores(Partido partido)
-	
+	def void actualizarPuntajeCriterio(Participante participante)
+
 }

@@ -27,9 +27,9 @@ class PropuestasTests {
 		propuesta1 = new Propuesta
 		datosDelSistema = new Sistema
 
-		datosDelSistema.fechaDelDia = 17062014
+		datosDelSistema.fechaDelDia = "17/06/2014"
 
-		jugador1.datosDelOrganizadorDePartidos = datosDelSistema
+		
 
 		propuesta1.setNombre("Mariano")
 
@@ -42,20 +42,20 @@ class PropuestasTests {
 
 	@Test
 	def void proponerAUnaPersona() {
-		jugador1.proponer(propuesta1)
+		jugador1.proponer(propuesta1,datosDelSistema)
 		Assert.assertEquals(1, datosDelSistema.propuestas.size)
 	}
 
 	@Test
 	def void aceptarUnaPropuesta() {
-		jugador1.proponer(propuesta1)
+		jugador1.proponer(propuesta1,datosDelSistema)
 		datosDelSistema.aceptarPropuesta(propuesta1)
 		Assert.assertEquals(1, datosDelSistema.jugadoresHabilitados.size)
 	}
 
 	@Test
 	def void rechazarUnaPropuesta() {
-		jugador1.proponer(propuesta1)
+		jugador1.proponer(propuesta1,datosDelSistema)
 		datosDelSistema.rechazarPropuesta(propuesta1, "Se da de baja siempre sobre la hora")
 		Assert.assertEquals(1, datosDelSistema.rechazos.size)
 	}

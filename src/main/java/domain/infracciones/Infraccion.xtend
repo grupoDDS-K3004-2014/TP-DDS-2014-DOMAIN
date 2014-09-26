@@ -1,7 +1,13 @@
 package domain.infracciones
 
-abstract class Infraccion {
+class Infraccion {
 
 	@Property String fecha
+	@Property String motivo
+
+	def igual(Infraccion infraccionAComparar) {
+		fecha == infraccionAComparar.fecha && motivo == infraccionAComparar.motivo
+	}
+		
 
 }

@@ -1,11 +1,11 @@
 package domain.criterios
 
-import domain.partido.Partido
+import domain.jugadores.Participante
 
 class CriterioUltimoPartido implements Criterio {
 
-	override determinarPuntajeJugadores(Partido partido) {
-		partido.jugadoresOrdenados.forEach[jugador|jugador.puntajeCriterio + jugador.ultimaNota]
+	override actualizarPuntajeCriterio(Participante participante) {
+		participante.puntajeCriterio = participante.puntajeCriterio + participante.ultimaNota
 	}
 
 }

@@ -13,10 +13,12 @@ import domain.observers.Observer
 @Observable
 class Partido extends Entity implements Cloneable {
 
+	@Property String nombreDelPartido
+	@Property String fecha
+	@Property int horario
 	@Property int periodicidad
 	@Property Dia dia
-	@Property int horario
-	@Property String fecha
+	@Property String confirmado = "No"	
 	ArrayList<Participante> participantesAux = new ArrayList<Participante>
 	@Property ArrayList<Participante> estandares = new ArrayList
 	@Property ArrayList<Participante> condicionales = new ArrayList
@@ -25,8 +27,7 @@ class Partido extends Entity implements Cloneable {
 	@Property ArrayList<Participante> equipoA = new ArrayList
 	@Property ArrayList<Participante> equipoB = new ArrayList
 	@Property ArrayList<Participante> jugadoresOrdenados = new ArrayList
-	@Property String confirmado = "No"
-	@Property String nombreDelPartido
+	@Property Criterio criterio
 
 	def void copiarValoresDe(Partido partido) {
 		periodicidad = partido.periodicidad
@@ -45,19 +46,24 @@ class Partido extends Entity implements Cloneable {
 		super.clone()
 	}
 
-	def void ordenarJugadores(Criterio criterio) {
-		jugadoresOrdenados = participantes
-		criterio.determinarPuntajeJugadores(this)
-		jugadoresOrdenados.forEach[jugador| jugador.puntajeCriterio = 0]
-		jugadoresOrdenados = new ArrayList(jugadoresOrdenados.sortBy[jugador|jugador.puntajeCriterio])
+	def ordenarJugadores(Criterio criterio) {
+
+		participantesAux = getParticipantes
+		participantesAux.forEach[jugador|jugador.setPuntajeCriterio(0)]
+		participantesAux.forEach[jugador|jugador.calcularPuntajeCriterio(criterio)]
+		jugadoresOrdenados = new ArrayList(participantesAux.sortBy[jugador|jugador.puntajeCriterio].reverse)
+		confirmado="No"
+
 	}
 
-	def separarJugadoresOrdenados(ArrayList<Integer> arrayDePosiciones) {
+	def void separarJugadoresOrdenados(ArrayList<Integer> arrayDePosiciones) {
 
 		equipoA = new ArrayList
 		equipoB = new ArrayList
 		arrayDePosiciones.map[posicion|posicion - 1].forEach[posicion|equipoA.add(jugadoresOrdenados.get(posicion))]
 		equipoB.addAll(jugadoresOrdenados.filter[jugadores|!(equipoA.contains(jugadores))])
+		confirmado = "Si"
+
 	}
 
 	def void confirmarDesconfirmarPartido() {
@@ -72,7 +78,9 @@ class Partido extends Entity implements Cloneable {
 	}
 
 	def eliminarParticipante(Participante jugador) {
-		participantes.remove(jugador)
+		estandares.remove(jugador)
+		condicionales.remove(jugador)
+		solidarios.remove(jugador)
 	}
 
 	def suscribir(Participante jugador) {
@@ -110,9 +118,8 @@ class Partido extends Entity implements Cloneable {
 
 	def darDeBaja(Participante participanteADarDeBaja) {
 		notificarBajaObservers()
-		this.eliminarParticipante(participanteADarDeBaja)
-		val infraccion = new InfraccionBajaSinRemplazo
-		infraccion.fecha = fecha
+		eliminarParticipante(participanteADarDeBaja)
+		val infraccion = InfraccionBajaSinRemplazo.nueva(fecha, "")
 		participanteADarDeBaja.agregarInfraccion(infraccion)
 	}
 

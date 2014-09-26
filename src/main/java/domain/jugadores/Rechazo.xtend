@@ -2,7 +2,7 @@ package domain.jugadores
 
 class Rechazo {
 
-	@Property long fecha
+	@Property String fecha
 	@Property String motivo
 	@Property Propuesta propuesta
 
