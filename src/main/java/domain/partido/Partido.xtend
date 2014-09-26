@@ -27,7 +27,6 @@ class Partido extends Entity implements Cloneable {
 	@Property ArrayList<Participante> equipoA = new ArrayList
 	@Property ArrayList<Participante> equipoB = new ArrayList
 	@Property ArrayList<Participante> jugadoresOrdenados = new ArrayList
-	@Property Criterio criterio
 
 	def void copiarValoresDe(Partido partido) {
 		periodicidad = partido.periodicidad
@@ -50,7 +49,9 @@ class Partido extends Entity implements Cloneable {
 
 		participantesAux = getParticipantes
 		participantesAux.forEach[jugador|jugador.setPuntajeCriterio(0)]
-		participantesAux.forEach[jugador|jugador.calcularPuntajeCriterio(criterio)]
+		participantesAux.forEach(
+			[criterioOrdenamiento, Participante jugador|jugador.calcularPuntajeCriterio(criterioOrdenamiento)].
+				curry(criterio))
 		jugadoresOrdenados = new ArrayList(participantesAux.sortBy[jugador|jugador.puntajeCriterio].reverse)
 
 	}
