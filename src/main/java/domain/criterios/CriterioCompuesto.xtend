@@ -1,12 +1,16 @@
 package domain.criterios
 
 import domain.jugadores.Participante
-import java.util.ArrayList
-import org.uqbar.commons.model.Entity
+import java.util.HashSet
+import java.util.Set
+import javax.persistence.Entity
+import javax.persistence.OneToMany
 
-class CriterioCompuesto extends Entity implements Criterio {
+@Entity
+class CriterioCompuesto  extends Criterio {
 
-	@Property ArrayList<Criterio> criterios = new ArrayList<Criterio>
+	@OneToMany
+	@Property Set<Criterio> criterios = new HashSet<Criterio>
 
 	def agregarCriterio(Criterio criterio) {
 		criterios.add(criterio)

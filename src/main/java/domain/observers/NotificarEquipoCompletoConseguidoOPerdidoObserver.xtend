@@ -2,10 +2,15 @@ package domain.observers
 
 import domain.notificaciones.ServidorDeEmails
 import domain.jugadores.Participante
+import javax.persistence.Entity
+import javax.persistence.OneToOne
 
-class NotificarEquipoCompletoConseguidoOPerdidoObserver implements Observer {
+@Entity
+class NotificarEquipoCompletoConseguidoOPerdidoObserver extends Observer {
 
 	@Property int confirmados = 0
+	
+	@OneToOne
 	@Property ServidorDeEmails servidorEmails = new ServidorDeEmails
 
 	override notificarAlta(Participante observable) {

@@ -1,5 +1,8 @@
 package domain.infracciones
 
+import javax.persistence.Entity
+
+@Entity
 class InfraccionBajaSinRemplazo extends Infraccion {
 	
 	

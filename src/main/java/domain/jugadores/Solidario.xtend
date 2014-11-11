@@ -1,7 +1,9 @@
 package domain.jugadores
 
 import domain.partido.Partido
+import javax.persistence.Entity
 
+@Entity
 class Solidario extends Participante {
 
 	

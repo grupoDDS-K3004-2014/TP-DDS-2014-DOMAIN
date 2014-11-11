@@ -1,12 +1,22 @@
 package domain.notificaciones
 
-import java.util.ArrayList
-import java.util.List
 import domain.jugadores.Participante
+import java.util.HashSet
+import java.util.Set
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
+import javax.persistence.OneToMany
 
+@Entity
 class ServidorDeEmails {
 
-	List<Email> notificaciones = new ArrayList<Email>
+	@Id
+	@GeneratedValue
+	@Property long id
+	
+	@OneToMany
+	@Property Set<Email> notificaciones = new HashSet<Email>
 
 	def notificarAdministrador() {
 		this.notificar
@@ -16,7 +26,7 @@ class ServidorDeEmails {
 		notificaciones.add(new Email)
 	}
 
-	def notificarCadena(ArrayList<Participante> gente) {
+	def notificarCadena(Set<Participante> gente) {
 
 		if (gente.size == 0) {
 		} else {

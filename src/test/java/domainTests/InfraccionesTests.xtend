@@ -6,7 +6,6 @@ import org.junit.Test
 import domain.partido.Partido
 import domain.jugadores.Condicional
 import domain.jugadores.Participante
-import domain.Dia
 import domain.infracciones.InfraccionBajaSinRemplazo
 
 class InfraccionesTests {
@@ -16,7 +15,7 @@ class InfraccionesTests {
 	@Before
 	def void beforeInscripcion() {
 
-		partido.setDia(Dia.Lunes)
+		partido.setDia("Lunes")
 		partido.setHorario(18)
 		partido.setPeriodicidad(1)
 		partido.setFecha("01/01/2000")

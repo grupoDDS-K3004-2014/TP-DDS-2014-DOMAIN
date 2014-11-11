@@ -1,10 +1,12 @@
 package domain.condiciones
 
 import domain.partido.Partido
+import javax.persistence.Entity
 
-class CondicionDia implements Condicion {
+@Entity
+class CondicionDia extends Condicion {
 
-	@Property domain.Dia diaCondicion
+	@Property String diaCondicion
 
 	override verificarCondicion(Partido partido) {
 

@@ -1,11 +1,20 @@
 package domain.infracciones
 
 import org.uqbar.commons.utils.Observable
-import org.uqbar.commons.model.Entity
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.GeneratedValue
+import javax.persistence.InheritanceType
+import javax.persistence.Inheritance
 
+@Entity
 @Observable
-class Infraccion extends Entity {
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+class Infraccion  {
 
+	@Id
+	@GeneratedValue
+	@Property long id
 	@Property String fecha
 	@Property String motivo
 

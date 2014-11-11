@@ -1,8 +1,10 @@
 package domain.criterios
 
 import domain.jugadores.Participante
+import javax.persistence.Entity
 
-class CriterioHandicap implements Criterio {
+@Entity
+class CriterioHandicap extends Criterio {
 
 		
 	override actualizarPuntajeCriterio(Participante participante) {

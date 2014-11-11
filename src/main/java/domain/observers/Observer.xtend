@@ -1,10 +1,21 @@
 package domain.observers
 
 import domain.jugadores.Participante
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
+import javax.persistence.Entity
+import javax.persistence.Inheritance
+import javax.persistence.InheritanceType
 
-interface Observer {
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+abstract class Observer {
+	
+	@Id
+	@GeneratedValue
+	@Property long id
 
-	def void notificarAlta(Participante observable)
+	abstract def void notificarAlta(Participante observable)
 
-	def void notificarBaja()
+	abstract def void notificarBaja()
 }

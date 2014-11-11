@@ -1,6 +1,6 @@
 package domainTests
 
-import domain.Dia
+
 import domain.condiciones.CondicionDia
 import domain.condiciones.CondicionHora
 import domain.condiciones.CondicionPeriodicidad
@@ -35,12 +35,12 @@ class InscripcionesTests {
 	@Before
 	def void beforeInscripcion() {
 
-		partido.setDia(Dia.Lunes)
+		partido.setDia("Lunes")
 		partido.setHorario(1800)
 		partido.setPeriodicidad(1)
 		partido.setFecha("01/01/2000")
 
-		condicionDia.setDiaCondicion(Dia.Lunes)
+		condicionDia.setDiaCondicion("Lunes")
 		condicionHora.setHoraCondicion(1800)
 		condicionPeriodicidad.setPeriodicidadCondicion(1)
 

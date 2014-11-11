@@ -3,13 +3,14 @@ package domain
 import domain.jugadores.Participante
 import domain.jugadores.Propuesta
 import domain.jugadores.Rechazo
-import java.util.ArrayList
+import java.util.HashSet
+import java.util.Set
 
 class Sistema {
 
-	@Property ArrayList<Propuesta> propuestas = new ArrayList<Propuesta>
-	@Property ArrayList<Rechazo> rechazos = new ArrayList<Rechazo>
-	@Property ArrayList<Participante> jugadoresHabilitados = new ArrayList<Participante>
+	@Property Set<Propuesta> propuestas = new HashSet<Propuesta>
+	@Property Set<Rechazo> rechazos = new HashSet<Rechazo>
+	@Property Set<Participante> jugadoresHabilitados = new HashSet<Participante>
 	@Property String fechaDelDia
 	
 

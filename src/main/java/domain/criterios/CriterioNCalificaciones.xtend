@@ -1,8 +1,10 @@
 package domain.criterios
 
 import domain.jugadores.Participante
+import javax.persistence.Entity
 
-class CriterioNCalificaciones implements Criterio {
+@Entity
+class CriterioNCalificaciones extends Criterio {
 
 	@Property int cantidadCalificaciones
 

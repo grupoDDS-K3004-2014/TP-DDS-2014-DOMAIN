@@ -13,7 +13,7 @@ import domain.partido.Partido
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import domain.Dia
+
 
 class OrdenarParticipantesTest {
 	Partido partido
@@ -28,9 +28,9 @@ class OrdenarParticipantesTest {
 	@Before
 	def void beforeInscripcion() {
 		partido = new Partido
-		partido.dia=Dia.Lunes
+		partido.dia="Lunes"
 		var condicion = new CondicionDia
-		condicion.diaCondicion=Dia.Lunes
+		condicion.diaCondicion="Lunes"
 		criterioHandicap = new CriterioHandicap
 		criterioUltimoPartido = new CriterioUltimoPartido
 		criterioCompuesto = new CriterioCompuesto

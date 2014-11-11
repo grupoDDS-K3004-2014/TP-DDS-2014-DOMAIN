@@ -1,13 +1,17 @@
 package domain.jugadores
 
-import java.util.ArrayList
-import java.util.Collection
-import domain.partido.Partido
 import domain.condiciones.Condicion
+import domain.partido.Partido
+import java.util.HashSet
+import java.util.Set
+import javax.persistence.OneToMany
+import javax.persistence.Entity
 
+@Entity
 class Condicional extends Participante {
 
-	@Property Collection<Condicion> condiciones = new ArrayList<Condicion>
+	@OneToMany
+	@Property Set<Condicion> condiciones = new HashSet<Condicion>
 
 	def condicionesCumplidas(Partido partido) {
 

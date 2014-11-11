@@ -1,8 +1,10 @@
 package domain.condiciones
 
 import domain.partido.Partido
+import javax.persistence.Entity
 
-class CondicionPeriodicidad implements Condicion {
+@Entity
+class CondicionPeriodicidad extends Condicion {
 
 	@Property int periodicidadCondicion
 

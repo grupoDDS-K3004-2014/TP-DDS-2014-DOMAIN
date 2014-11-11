@@ -1,6 +1,6 @@
 package domainTests
 
-import domain.Dia
+
 import domain.calificaciones.Calificacion
 import domain.jugadores.Estandar
 import domain.jugadores.Participante
@@ -25,7 +25,7 @@ class CalificacionesTests {
 	@Before
 	def void beforeInscripcion() {
 
-		partido.setDia(Dia.Lunes)
+		partido.setDia("Lunes")
 		partido.setHorario(18)
 		partido.setPeriodicidad(1)
 		partido.setFecha("01/01/2000")

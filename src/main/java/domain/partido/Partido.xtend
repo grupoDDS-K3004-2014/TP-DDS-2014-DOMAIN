@@ -1,32 +1,59 @@
 package domain.partido
 
-import domain.Dia
 import domain.criterios.Criterio
 import domain.exceptions.PartidoLleno
 import domain.infracciones.InfraccionBajaSinRemplazo
 import domain.jugadores.Participante
-import java.util.ArrayList
-import org.uqbar.commons.model.Entity
-import org.uqbar.commons.utils.Observable
 import domain.observers.Observer
+import java.util.ArrayList
+import org.uqbar.commons.utils.Observable
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.GeneratedValue
+import java.util.HashSet
+import java.util.Set
+import javax.persistence.ManyToMany
 
+@Entity
 @Observable
-class Partido extends Entity implements Cloneable {
+class Partido implements Cloneable {
 
+
+	@Id
+	@GeneratedValue
+	@Property long id
+	
 	@Property String nombreDelPartido
 	@Property String fecha
 	@Property int horario
 	@Property int periodicidad
-	@Property Dia dia
+	@Property String dia
 	@Property String confirmado = "No"
-	ArrayList<Participante> participantesAux = new ArrayList<Participante>
-	@Property ArrayList<Participante> estandares = new ArrayList
-	@Property ArrayList<Participante> condicionales = new ArrayList
-	@Property ArrayList<Participante> solidarios = new ArrayList
-	@Property ArrayList<Observer> observers = new ArrayList
-	@Property ArrayList<Participante> equipoA = new ArrayList
-	@Property ArrayList<Participante> equipoB = new ArrayList
-	@Property ArrayList<Participante> jugadoresOrdenados = new ArrayList
+	
+	
+	@ManyToMany
+	@Property Set<Participante> participantesAux = new HashSet
+	
+	@ManyToMany
+	@Property Set<Participante> estandares = new HashSet
+	
+	@ManyToMany
+	@Property Set<Participante> condicionales = new HashSet
+	
+	@ManyToMany
+	@Property Set<Participante> solidarios = new HashSet
+	
+	@ManyToMany
+	@Property Set<Observer> observers = new HashSet
+	
+	@ManyToMany
+	@Property Set<Participante> equipoA = new HashSet
+	
+	@ManyToMany
+	@Property Set<Participante> equipoB = new HashSet
+	
+	@ManyToMany
+	@Property Set<Participante> jugadoresOrdenados = new HashSet
 
 	def void copiarValoresDe(Partido partido) {
 		periodicidad = partido.periodicidad
@@ -52,14 +79,14 @@ class Partido extends Entity implements Cloneable {
 		participantesAux.forEach(
 			[criterioOrdenamiento, Participante jugador|jugador.calcularPuntajeCriterio(criterioOrdenamiento)].
 				curry(criterio))
-		jugadoresOrdenados = new ArrayList(participantesAux.sortBy[jugador|jugador.puntajeCriterio].reverse)
+		jugadoresOrdenados = new HashSet(participantesAux.sortBy[jugador|jugador.puntajeCriterio].reverse)
 
 	}
 
 	def void separarJugadoresOrdenados(ArrayList<Integer> arrayDePosiciones) {
 
-		equipoA = new ArrayList
-		equipoB = new ArrayList
+		equipoA = new HashSet
+		equipoB = new HashSet
 		arrayDePosiciones.map[posicion|posicion - 1].forEach[posicion|equipoA.add(jugadoresOrdenados.get(posicion))]
 		equipoB.addAll(jugadoresOrdenados.filter[jugadores|!(equipoA.contains(jugadores))])
 
@@ -115,18 +142,18 @@ class Partido extends Entity implements Cloneable {
 		participanteADarDeBaja.agregarInfraccion(infraccion)
 	}
 
-	def ArrayList<Participante> getParticipantes() {
-		participantesAux = new ArrayList<Participante>
+	def Set<Participante> getParticipantes() {
+		participantesAux = new HashSet<Participante>
 		estandares.forEach[participante|participantesAux.add(participante)]
 		condicionales.forEach[participante|participantesAux.add(participante)]
 		solidarios.forEach[participante|participantesAux.add(participante)]
 		if (participantesAux.size > 10) {
-			return new ArrayList<Participante>(participantesAux.toList.subList(0, 10))
+			return new HashSet<Participante>(participantesAux.toList.subList(0, 10))
 		} else
-			return new ArrayList<Participante>(participantesAux)
+			return new HashSet<Participante>(participantesAux)
 	}
 
-	def setParticipantes(ArrayList<Participante> p) {
+	def setParticipantes(Set<Participante> p) {
 	}
 
 	def confirmarDesconfirmarPartido() {

@@ -1,6 +1,6 @@
 package domainTests
 
-import domain.Dia
+
 import domain.jugadores.Condicional
 import domain.jugadores.Estandar
 import domain.jugadores.Participante
@@ -28,7 +28,7 @@ class NotificacionesTests {
 	@Before
 	def void beforeInscripcion() {
 
-		partido.setDia(Dia.Lunes)
+		partido.setDia("Lunes")
 		partido.setFecha("01/01/2000")
 
 		observerNotificarAmigos.setServidorEmails(gmail)

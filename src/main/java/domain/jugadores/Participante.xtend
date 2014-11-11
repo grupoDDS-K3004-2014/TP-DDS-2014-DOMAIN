@@ -2,25 +2,44 @@ package domain.jugadores
 
 import domain.Sistema
 import domain.calificaciones.Calificacion
-import domain.infracciones.Infraccion
-import domain.partido.Partido
-import java.util.ArrayList
-import org.uqbar.commons.model.Entity
-import org.uqbar.commons.utils.Observable
+import domain.criterios.Criterio
 import domain.exceptions.CalificacionIncorrectaException
 import domain.exceptions.NotaCalificacionIncorrecta
-import domain.criterios.Criterio
+import domain.infracciones.Infraccion
+import domain.partido.Partido
+import java.util.HashSet
+import java.util.Set
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.Id
+import javax.persistence.Inheritance
+import javax.persistence.InheritanceType
+import javax.persistence.ManyToMany
+import javax.persistence.OneToMany
+import org.uqbar.commons.utils.Observable
 
 @Observable
-class Participante extends Entity {
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+class Participante {
 
-	@Property ArrayList<Calificacion> calificaciones = new ArrayList<Calificacion>
-	@Property ArrayList<Participante> amigos = new ArrayList<Participante>
-	@Property ArrayList<Infraccion> infracciones = new ArrayList<Infraccion>
+	@Id
+	@GeneratedValue
+	@Property long id
+	
+	@OneToMany
+	@Property Set<Calificacion> calificaciones = new HashSet<Calificacion>
+	
+	@ManyToMany
+	@Property Set<Participante> amigos = new HashSet<Participante>
+	
+	@OneToMany
+	@Property Set<Infraccion> infracciones = new HashSet<Infraccion>
+	
 	@Property String nombre
 	@Property String fechaNacimiento
 	@Property int handicap
-	@Property Integer puntajeCriterio
+	@Property int puntajeCriterio
 	@Property String apodo
 
 	def agregarInfraccion(Infraccion infraccion) {

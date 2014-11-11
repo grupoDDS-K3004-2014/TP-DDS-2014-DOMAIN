@@ -1,10 +1,19 @@
 package domain.calificaciones
 
-import org.uqbar.commons.model.Entity
-import org.uqbar.commons.utils.Observable
 
+import org.uqbar.commons.utils.Observable
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.GeneratedValue
+
+@Entity
 @Observable
-class Calificacion extends Entity {
+class Calificacion {
+
+	@Id
+	@GeneratedValue
+	@Property long id
+	
 	@Property int nota
 	@Property String descripcion
 	@Property String fecha
