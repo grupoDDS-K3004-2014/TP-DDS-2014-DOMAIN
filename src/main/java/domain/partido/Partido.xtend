@@ -1,58 +1,67 @@
 package domain.partido
 
 import domain.criterios.Criterio
-import domain.exceptions.PartidoLleno
 import domain.infracciones.InfraccionBajaSinRemplazo
 import domain.jugadores.Participante
 import domain.observers.Observer
+import java.io.Serializable
 import java.util.ArrayList
-import org.uqbar.commons.utils.Observable
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.GeneratedValue
 import java.util.HashSet
 import java.util.Set
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.JoinTable
 import javax.persistence.ManyToMany
+import org.uqbar.commons.utils.Observable
+import javax.persistence.FetchType
 
 @Entity
 @Observable
-class Partido implements Cloneable {
-
+class Partido implements Cloneable, Serializable {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Property long id
-	
+
 	@Property String nombreDelPartido
 	@Property String fecha
 	@Property int horario
 	@Property int periodicidad
 	@Property String dia
 	@Property String confirmado = "No"
-	
-	
-	@ManyToMany
+
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="auxiliaresPorPartido", joinColumns=@JoinColumn(name="Partido_ID", referencedColumnName="_id"), inverseJoinColumns=@JoinColumn(name="Participante_ID", referencedColumnName="_id"))
 	@Property Set<Participante> participantesAux = new HashSet
-	
-	@ManyToMany
+
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="estandaresPorPartido", joinColumns=@JoinColumn(name="Partido_ID", referencedColumnName="_id"), inverseJoinColumns=@JoinColumn(name="Participante_ID", referencedColumnName="_id"))
 	@Property Set<Participante> estandares = new HashSet
-	
-	@ManyToMany
+
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="condicionalesPorPartido", joinColumns=@JoinColumn(name="Partido_ID", referencedColumnName="_id"), inverseJoinColumns=@JoinColumn(name="Participante_ID", referencedColumnName="_id"))
 	@Property Set<Participante> condicionales = new HashSet
-	
-	@ManyToMany
+
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="solidarioPorPartido", joinColumns=@JoinColumn(name="Partido_ID", referencedColumnName="_id"), inverseJoinColumns=@JoinColumn(name="Participante_ID", referencedColumnName="_id"))
 	@Property Set<Participante> solidarios = new HashSet
-	
-	@ManyToMany
+
+	@ManyToMany(fetch=FetchType.EAGER)	
 	@Property Set<Observer> observers = new HashSet
-	
-	@ManyToMany
+
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="auxiliarPorEquipoA", joinColumns=@JoinColumn(name="Partido_ID", referencedColumnName="_id"), inverseJoinColumns=@JoinColumn(name="Participante_ID", referencedColumnName="_id"))
 	@Property Set<Participante> equipoA = new HashSet
-	
-	@ManyToMany
+
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="auxiliarPorEquipoB", joinColumns=@JoinColumn(name="Partido_ID", referencedColumnName="_id"), inverseJoinColumns=@JoinColumn(name="Participante_ID", referencedColumnName="_id"))
 	@Property Set<Participante> equipoB = new HashSet
-	
-	@ManyToMany
+
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="jugadorOrdenado", joinColumns=@JoinColumn(name="Partido_ID", referencedColumnName="_id"), inverseJoinColumns=@JoinColumn(name="Participante_ID", referencedColumnName="_id"))
 	@Property Set<Participante> jugadoresOrdenados = new HashSet
 
 	def void copiarValoresDe(Partido partido) {
@@ -103,10 +112,11 @@ class Partido implements Cloneable {
 	}
 
 	def suscribir(Participante jugador) {
-		if (cupoCerrado)
+
+		/*if (cupoCerrado)
 			throw new PartidoLleno
-		else
-			jugador.ubicarse(this)
+		else*/
+		jugador.ubicarse(this)
 
 	}
 

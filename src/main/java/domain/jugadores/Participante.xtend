@@ -7,34 +7,37 @@ import domain.exceptions.CalificacionIncorrectaException
 import domain.exceptions.NotaCalificacionIncorrecta
 import domain.infracciones.Infraccion
 import domain.partido.Partido
+import java.io.Serializable
 import java.util.HashSet
 import java.util.Set
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.Inheritance
 import javax.persistence.InheritanceType
 import javax.persistence.ManyToMany
 import javax.persistence.OneToMany
 import org.uqbar.commons.utils.Observable
+import javax.persistence.FetchType
 
 @Observable
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-class Participante {
+class Participante implements Serializable{
 
-	@Id
-	@GeneratedValue
+	@Id	
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Property long id
 	
-	@OneToMany
-	@Property Set<Calificacion> calificaciones = new HashSet<Calificacion>
+	@OneToMany(fetch=FetchType.EAGER)
+	@Property Set<Calificacion> calificaciones = new HashSet
 	
-	@ManyToMany
-	@Property Set<Participante> amigos = new HashSet<Participante>
+	@ManyToMany(fetch=FetchType.EAGER)
+	@Property Set<Participante> amigos = new HashSet	
 	
-	@OneToMany
-	@Property Set<Infraccion> infracciones = new HashSet<Infraccion>
+	@OneToMany(fetch=FetchType.EAGER)
+	@Property Set<Infraccion> infracciones = new HashSet
 	
 	@Property String nombre
 	@Property String fechaNacimiento
@@ -43,11 +46,12 @@ class Participante {
 	@Property String apodo
 
 	def agregarInfraccion(Infraccion infraccion) {
-		infracciones.add(infraccion)
+		infracciones.add(infraccion)		
 	}
 
 	def agregarAmigo(Participante amigo) {
-		amigos.add(amigo)
+		amigos.add(amigo)			
+		
 	}
 
 	def calificarJugador(Partido partido, Participante jugador, Calificacion calificacion) {

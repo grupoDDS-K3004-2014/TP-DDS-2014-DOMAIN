@@ -12,13 +12,19 @@ import org.hibernate.Session
 class HomePartidos {
 
 	new() {
-		init
+		
 	}
 
-	def Set<Partido> getAll() {
+	def static Set<Partido> getAll() {
 		val session = sessionFactory.openSession
+		session.beginTransaction
+		
 		val query = session.createQuery("from Partido")
-		new HashSet(query.list())
+		var Set<Partido> hash = new HashSet(query.list())
+	
+		session.transaction.commit	
+		session.close
+		hash
 	}
 
 	def void add(Object object) {
@@ -39,37 +45,9 @@ class HomePartidos {
 		}
 	}
 
-	def void init() {
-
-		if (getAll().empty) {
-			var partido1 = new Partido => [
-				nombreDelPartido = "El superClasico de Martelli"
-				dia = "Sabado"
-				horario = 2230
-				periodicidad = 2
-				fecha = "25/09/2014"
-			]
-			var partido2 = new Partido => [
-				nombreDelPartido = "Los pibes de Accenture"
-				dia = "Viernes"
-				horario = 1715
-				periodicidad = 3
-				fecha = "17/09/2014"
-			]
-
-			var partido3 = new Partido => [
-				nombreDelPartido = "Don Torcuato copa"
-				dia = "Lunes"
-				horario = 1045
-				periodicidad = 1
-				fecha = "30/11/2014"
-			]
-			add(partido1)
-			add(partido2)
-			add(partido3)
-
-		}
-
+	def search(String nombre) {
+		val resultados = getAll()
+		resultados.filter[partido|partido.nombreDelPartido == nombre]
 	}
 
 }
