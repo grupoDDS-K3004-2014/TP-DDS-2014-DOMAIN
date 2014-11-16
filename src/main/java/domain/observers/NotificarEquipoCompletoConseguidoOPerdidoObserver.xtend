@@ -9,7 +9,7 @@ import javax.persistence.OneToOne
 class NotificarEquipoCompletoConseguidoOPerdidoObserver extends Observer {
 
 	@Property int confirmados = 0
-	
+
 	@OneToOne
 	@Property ServidorDeEmails servidorEmails = new ServidorDeEmails
 

@@ -24,21 +24,21 @@ import javax.persistence.FetchType
 @Observable
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-class Participante implements Serializable{
+class Participante implements Serializable {
 
-	@Id	
+	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Property long id
-	
+
 	@OneToMany(fetch=FetchType.EAGER)
 	@Property Set<Calificacion> calificaciones = new HashSet
-	
+
 	@ManyToMany(fetch=FetchType.EAGER)
-	@Property Set<Participante> amigos = new HashSet	
-	
+	@Property Set<Participante> amigos = new HashSet
+
 	@OneToMany(fetch=FetchType.EAGER)
 	@Property Set<Infraccion> infracciones = new HashSet
-	
+
 	@Property String nombre
 	@Property String fechaNacimiento
 	@Property int handicap
@@ -46,12 +46,12 @@ class Participante implements Serializable{
 	@Property String apodo
 
 	def agregarInfraccion(Infraccion infraccion) {
-		infracciones.add(infraccion)		
+		infracciones.add(infraccion)
 	}
 
 	def agregarAmigo(Participante amigo) {
-		amigos.add(amigo)			
-		
+		amigos.add(amigo)
+
 	}
 
 	def calificarJugador(Partido partido, Participante jugador, Calificacion calificacion) {

@@ -10,7 +10,7 @@ import javax.persistence.Inheritance
 @Entity
 @Observable
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-class Infraccion  {
+class Infraccion {
 
 	@Id
 	@GeneratedValue

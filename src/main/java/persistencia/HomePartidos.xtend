@@ -12,17 +12,16 @@ import org.hibernate.Session
 class HomePartidos {
 
 	new() {
-		
 	}
 
 	def static Set<Partido> getAll() {
 		val session = sessionFactory.openSession
 		session.beginTransaction
-		
+
 		val query = session.createQuery("from Partido")
 		var Set<Partido> hash = new HashSet(query.list())
-	
-		session.transaction.commit	
+
+		session.transaction.commit
 		session.close
 		hash
 	}

@@ -14,7 +14,7 @@ class ServidorDeEmails {
 	@Id
 	@GeneratedValue
 	@Property long id
-	
+
 	@OneToMany
 	@Property Set<Email> notificaciones = new HashSet<Email>
 

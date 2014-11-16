@@ -6,7 +6,7 @@ import javax.persistence.Id
 
 @Entity
 class Email {
-	
+
 	@Id
 	@GeneratedValue
 	@Property long id

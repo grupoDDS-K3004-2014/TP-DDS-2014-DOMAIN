@@ -6,7 +6,7 @@ import javax.persistence.Entity
 @Entity
 class Estandar extends Participante {
 
-	override  ubicarse(Partido partido) {
+	override ubicarse(Partido partido) {
 		partido.estandares.add(this)
 		partido.notificarAltaObservers(this)
 	}

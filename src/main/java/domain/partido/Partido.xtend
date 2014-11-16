@@ -49,7 +49,7 @@ class Partido implements Cloneable, Serializable {
 	@JoinTable(name="solidarioPorPartido", joinColumns=@JoinColumn(name="Partido_ID", referencedColumnName="_id"), inverseJoinColumns=@JoinColumn(name="Participante_ID", referencedColumnName="_id"))
 	@Property Set<Participante> solidarios = new HashSet
 
-	@ManyToMany(fetch=FetchType.EAGER)	
+	@ManyToMany(fetch=FetchType.EAGER)
 	@Property Set<Observer> observers = new HashSet
 
 	@ManyToMany(fetch=FetchType.EAGER)

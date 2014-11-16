@@ -7,7 +7,7 @@ import javax.persistence.Entity
 import javax.persistence.OneToMany
 
 @Entity
-class CriterioCompuesto  extends Criterio {
+class CriterioCompuesto extends Criterio {
 
 	@OneToMany
 	@Property Set<Criterio> criterios = new HashSet<Criterio>
