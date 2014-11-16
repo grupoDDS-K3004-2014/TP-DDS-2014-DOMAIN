@@ -1,6 +1,5 @@
 package domain.calificaciones
 
-
 import org.uqbar.commons.utils.Observable
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -13,7 +12,7 @@ class Calificacion {
 	@Id
 	@GeneratedValue
 	@Property long id
-	
+
 	@Property int nota
 	@Property String descripcion
 	@Property String fecha

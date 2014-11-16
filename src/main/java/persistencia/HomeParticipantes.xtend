@@ -12,6 +12,7 @@ import org.apache.commons.collections.Closure
 import org.hibernate.HibernateException
 import org.hibernate.Session
 
+import static org.hibernate.criterion.Restrictions.*
 import static persistencia.SessionManager.*
 
 class HomeParticipantes {
@@ -294,7 +295,44 @@ class HomeParticipantes {
 		hash
 	}
 
-	def search(String nombre, String fechaNacimiento, int handicapInicial, int handicapFinal, String apodo,
+	def static Set<Participante> search(String nombre, String fechaNacimiento, int handicapInicial, int handicapFinal,
+		String apodo, boolean tieneInfraccion, int promedioDesde, int promedioHasta) {
+		val session = sessionFactory.openSession
+		session.beginTransaction
+		val query = session.createCriteria(Participante)
+		if (nombre != "") {
+			query.add(like("_nombre", "%" + nombre + "%"))
+		}
+		if (apodo != "") {
+			query.add(like("_apodo", "%" + apodo + "%"))
+		}
+		if (tieneInfraccion) {
+			query.add(sizeGe("_infracciones", 1))
+		}
+		if (handicapFinal == 0) {
+			query.add(gt("_handicap", handicapInicial))
+		} else {
+
+			query.add(between("_handicap", handicapInicial, handicapFinal))
+		}
+		var hash = new HashSet(
+			query.list().filter[participante|cumpleRangoPromedio(participante, promedioDesde, promedioHasta)].toList)
+		if (fechaNacimiento != "") {
+			hash.filter[participante|fechaAnteriorA(fechaNacimiento, participante)].toList
+		}
+		session.flush
+		session.transaction.commit
+		session.close
+		new HashSet(hash.sortBy[participante|participante.handicap].toList)
+	}
+
+	def static cumpleRangoPromedio(Participante jugador, int promedioDesde, int promedioHasta) {
+		tienePromedioMenorA(promedioHasta, jugador.ultimaNota) &&
+			tienePromedioMayorA(promedioDesde, jugador.ultimaNota)
+
+	}
+
+	/* 	def search2(String nombre, String fechaNacimiento, int handicapInicial, int handicapFinal, String apodo,
 		boolean tieneInfraccion, int promedioDesde, int promedioHasta) {
 		new HashSet(
 			getAll().filter[jugador|
@@ -305,62 +343,20 @@ class HomeParticipantes {
 					this.fechaAnteriorA(fechaNacimiento, jugador.fechaNacimiento) &&
 					this.tienePromedioMenorA(promedioHasta, jugador.ultimaNota) &&
 					this.tienePromedioMayorA(promedioDesde, jugador.ultimaNota)].toList)
-	}
-
-	def cumpleCon(int handicapInicial, int handicap) {
-		if (handicapInicial == 0) {
-			return true
-		} else {
-			handicap >= handicapInicial
-		}
-	}
-
-	def tieneElNombre(String string, String nombre) {
-		if (string == null) {
-			return true
-		} else {
-			nombre.toString().toLowerCase().contains(string.toString().toLowerCase())
-		}
-	}
-
-	def tieneElApodo(String apo, String apodo) {
-		if (apo == null) {
-			return true
-		} else {
-			apodo.toString().toLowerCase().contains(apo.toString().toLowerCase())
-		}
-	}
-
-	def fechaAnteriorA(String fechaNacimientoBusqueda, String fechaNacimientoJugador) {
-		if (fechaNacimientoBusqueda != "" && fechaNacimientoJugador != null)
-			verificarAño(fechaNacimientoBusqueda, fechaNacimientoJugador.substring(6))
+	}*/
+	def static fechaAnteriorA(String fechaNacimientoBusqueda, Participante participante) {
+		if (fechaNacimientoBusqueda != "" && participante.fechaNacimiento != null)
+			verificarAño(fechaNacimientoBusqueda, participante.fechaNacimiento.substring(6))
 		else
 			true
 
 	}
 
-	def verificarAño(String fechaBusqueda, String fechaJugador) {
+	def static verificarAño(String fechaBusqueda, String fechaJugador) {
 		Integer.parseInt(fechaJugador) < Integer.parseInt(fechaBusqueda)
 	}
 
-	def suHandicapEsMenorA(int handicapMayor, int handicap) {
-		if (handicapMayor == 0) {
-			return true
-		} else {
-			handicap <= handicapMayor
-		}
-	}
-
-	def cumpleInfracciones(boolean tieneInfraccion, Participante jugador) {
-
-		if (tieneInfraccion)
-			jugador.infracciones.size != 0
-		else
-			jugador.infracciones.size == 0
-
-	}
-
-	def tienePromedioMenorA(long promedioMayor, long promedio) {
+	def static tienePromedioMenorA(long promedioMayor, long promedio) {
 		if (promedioMayor == 0) {
 			return true
 		} else {
@@ -368,7 +364,7 @@ class HomeParticipantes {
 		}
 	}
 
-	def tienePromedioMayorA(long promedioMenor, long promedio) {
+	def static tienePromedioMayorA(long promedioMenor, long promedio) {
 		if (promedioMenor == 0) {
 			return true
 		} else {
@@ -376,4 +372,7 @@ class HomeParticipantes {
 		}
 	}
 
+	def static baseNoCargada() {
+		getAll().empty
+	}
 }

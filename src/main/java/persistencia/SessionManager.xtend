@@ -31,92 +31,90 @@ class SessionManager {
 	static ThreadLocal<Session> tlSession = new ThreadLocal
 	static SessionFactory sessionFactory;
 
-	def static getSession(){
+	def static getSession() {
 		tlSession.get
 	}
-	
-	def static setSession(Session session){
+
+	def static setSession(Session session) {
 		tlSession.set(session)
 	}
-	
+
 	def synchronized static SessionFactory getSessionFactory() {
 		if (sessionFactory == null) {
 			val cfg = new Configuration();
 			cfg.configure();
-			
+
 			addClasses(cfg)
-			
+
 			sessionFactory = cfg.buildSessionFactory();
 		}
 
 		return sessionFactory;
 	}
-	
+
 	def static addClasses(Configuration cfg) {
-		
-	cfg.addAnnotatedClass(Calificacion)
-	cfg.addAnnotatedClass(Criterio)
-	cfg.addAnnotatedClass(CriterioCompuesto)
-	cfg.addAnnotatedClass(CriterioHandicap)
-	cfg.addAnnotatedClass(CriterioNCalificaciones)
-	cfg.addAnnotatedClass(CriterioUltimoPartido)
-	cfg.addAnnotatedClass(Infraccion)
-	cfg.addAnnotatedClass(InfraccionBajaSinRemplazo)
-	cfg.addAnnotatedClass(InfraccionMalaConducta)
-	cfg.addAnnotatedClass(Participante)
-	cfg.addAnnotatedClass(Solidario)
-	cfg.addAnnotatedClass(Estandar)
-	cfg.addAnnotatedClass(Condicional)
-	cfg.addAnnotatedClass(Partido)
-	cfg.addAnnotatedClass(Condicion)
-	cfg.addAnnotatedClass(CondicionDia)
-	cfg.addAnnotatedClass(CondicionHora)
-	cfg.addAnnotatedClass(CondicionPeriodicidad)
-	cfg.addAnnotatedClass(Observer)
-	cfg.addAnnotatedClass(NotificarConfirmacionAAmigosObserver)
-	cfg.addAnnotatedClass(NotificarEquipoCompletoConseguidoOPerdidoObserver)
-	cfg.addAnnotatedClass(ServidorDeEmails)
-	cfg.addAnnotatedClass(Email)
-		
-	
+
+		cfg.addAnnotatedClass(Calificacion)
+		cfg.addAnnotatedClass(Criterio)
+		cfg.addAnnotatedClass(CriterioCompuesto)
+		cfg.addAnnotatedClass(CriterioHandicap)
+		cfg.addAnnotatedClass(CriterioNCalificaciones)
+		cfg.addAnnotatedClass(CriterioUltimoPartido)
+		cfg.addAnnotatedClass(Infraccion)
+		cfg.addAnnotatedClass(InfraccionBajaSinRemplazo)
+		cfg.addAnnotatedClass(InfraccionMalaConducta)
+		cfg.addAnnotatedClass(Participante)
+		cfg.addAnnotatedClass(Solidario)
+		cfg.addAnnotatedClass(Estandar)
+		cfg.addAnnotatedClass(Condicional)
+		cfg.addAnnotatedClass(Partido)
+		cfg.addAnnotatedClass(Condicion)
+		cfg.addAnnotatedClass(CondicionDia)
+		cfg.addAnnotatedClass(CondicionHora)
+		cfg.addAnnotatedClass(CondicionPeriodicidad)
+		cfg.addAnnotatedClass(Observer)
+		cfg.addAnnotatedClass(NotificarConfirmacionAAmigosObserver)
+		cfg.addAnnotatedClass(NotificarEquipoCompletoConseguidoOPerdidoObserver)
+		cfg.addAnnotatedClass(ServidorDeEmails)
+		cfg.addAnnotatedClass(Email)
+
 	}
-	
-	def static startApplication(){
+
+	def static startApplication() {
 		getSessionFactory
 	}
-	
-	def static closeApplication(){
-		if(sessionFactory != null)
-			sessionFactory.close	
+
+	def static closeApplication() {
+		if (sessionFactory != null)
+			sessionFactory.close
 	}
-	
-	def static openSession(){
+
+	def static openSession() {
 		var Session session = getSession;
-		if(session == null){
+		if (session == null) {
 			session = getSessionFactory().openSession();
 			session.beginTransaction();
 			tlSession.set(session)
 		}
 	}
-	
-	def static commit(){
-		if(session != null){
+
+	def static commit() {
+		if (session != null) {
 			println("Commit de la transaccion")
 			session.flush
 			session.transaction.commit
-		}				
+		}
 	}
-		
 
-	def static closeSession(){
+	def static closeSession() {
 		var Session session = getSession;
-		if(session != null){
+		if (session != null) {
 			println("Cierro la transaccion")
-			if(session.transaction.active)
+			if (session.transaction.active)
 				session.transaction.rollback
 			session.close
 			tlSession.set(null)
-		}		
-	}	
-	
+		}
+	}
+
 }

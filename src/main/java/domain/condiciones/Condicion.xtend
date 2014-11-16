@@ -11,9 +11,10 @@ import javax.persistence.Inheritance
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 abstract class Condicion {
 
- 	@Id
- 	@GeneratedValue
+	@Id
+	@GeneratedValue
 	@Property long id
+
 	abstract def boolean verificarCondicion(Partido partido)
 
 }

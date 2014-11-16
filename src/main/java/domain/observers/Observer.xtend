@@ -10,7 +10,7 @@ import javax.persistence.InheritanceType
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 abstract class Observer {
-	
+
 	@Id
 	@GeneratedValue
 	@Property long id

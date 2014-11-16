@@ -13,7 +13,7 @@ abstract class Criterio {
 	@Id
 	@GeneratedValue
 	@Property long id
-	
+
 	abstract def void actualizarPuntajeCriterio(Participante participante)
-	
+
 }

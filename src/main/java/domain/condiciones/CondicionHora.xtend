@@ -8,7 +8,6 @@ class CondicionHora extends Condicion {
 
 	@Property int horaCondicion
 
-	
 	override verificarCondicion(Partido partido) {
 		horaCondicion == partido.getHorario
 	}
